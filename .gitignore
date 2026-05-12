@@ -18,3 +18,5 @@ ktp_sintetik/
 Thumbs.db
 Desktop.ini
 .DS_Store
+.venv
+.env
