@@ -1,0 +1,29 @@
+warna_teks = (62, 62, 62, 255)
+warna_semi_bold = (62, 62, 62, 104)
+
+write.text((312,30), ..., fill=warna_teks, anchor="ms") # PROVINSI
+write.text((311,36), ..., fill=warna_teks, anchor="mt") # KOTA
+write.text((156,92), ..., fill=warna_teks, anchor="lt", stroke_width=0.40, stroke_fill=(0, 0, 0, 255)) # NIK
+write.text((170,124), ..., fill=warna_teks, anchor="lt") # NAMA
+write.text((170,142), ..., fill=warna_teks, anchor="lt") # TEMPAT/TGL LAHIR
+write.text((170,160), ..., fill=warna_teks, anchor="lt") # JENIS KELAMIN
+write.text((313,160), ..., fill=warna_teks, anchor="lt") # GOLONGAN DARAH
+write.text((170,179), ..., fill=warna_teks, anchor="lt") # ALAMAT
+write.text((170,197), ..., fill=warna_teks, anchor="lt") # RT/RW
+write.text((170,216), ..., fill=warna_teks, anchor="lt") # KEL/DESA
+write.text((170,234), ..., fill=warna_teks, anchor="lt") # KECAMATAN
+write.text((170,252), ..., fill=warna_teks, anchor="lt") # AGAMA
+write.text((170,270), ..., fill=warna_teks, anchor="lt") # STATUS KAWIN
+write.text((170,289), ..., fill=warna_teks, anchor="lt") # PEKERJAAN
+write.text((170,307), ..., fill=warna_teks, anchor="lt") # KEWARGANEGARAAN
+write.text((170,325), ..., fill=warna_teks, anchor="lt") # BERLAKU HINGGA
+write.text((525,299), ..., fill=warna_teks, anchor="mt") # KOTA (Footer)
+write.text((525,317), ..., fill=warna_teks, anchor="mt") # TGL TERBUAT
+write.text((525,341), ..., fill=warna_teks, anchor="mt") # TANDA TANGAN
+
+# ==========================================
+# KODE PASTE FOTO FINAL:
+# ==========================================
+target_w, target_h = 155, 199
+pas_photo_final = pas_photo.resize((target_w, target_h))
+tmp.paste(pas_photo_final, (444, 93))

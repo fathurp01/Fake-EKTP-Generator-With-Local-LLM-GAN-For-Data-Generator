@@ -22,18 +22,25 @@ FakeKTPGenerator/
 │   ├── Ocr.ttf             # Khusus untuk NIK
 │   └── Sign.ttf            # Untuk generasi tanda tangan dinamis
 │
-├── Template/               # Folder untuk 10 foto blank template KTP (miring/natural)
+├── Master-Template/        # Master template dan konfigurasi koordinat
+├── KTP/                    # Template KTP sumber
+├── Preview-Masking/        # Preview hasil masking
+├── Template-Clean/         # Template yang sudah dibersihkan
 │
-├── Output/                 # Folder utama hasil generasi (Otomatis dibuat oleh script)
-│   ├── dataset_mask/
-│   ├── dataset_background/
-│   ├── dataset_warped_layers/
-│   ├── dataset_composited/
-│   └── dataset_siap_pakai/ # Hasil akhir dataset
+├── Fase1-Output/           # Data teks terstruktur hasil Fase 1
+├── Fase2-Output/           # Hasil pembangkitan wajah / placeholder
+├── Fase3-Output/           # Mask dan kalibrasi template KTP
+├── Fase3.1-Output/         # Konfigurasi template bersih
+├── Fase3.2-Output/         # Dataset perantara Fase 3.2
+├── Fase4-Output/           # Pemetaan skenario dan background GAN
+├── Fase5-Output/           # Hasil compositing awal
+├── Fase6-Output/           # Hasil harmonisasi visual
+└── Fase7-Output/           # Hasil akhir dataset
 │
 ├── Fake_KTP_Generator.ipynb # Core Script
+├── config_fase3.json        # (Generated) File koordinat kalibrasi Fase 3
+├── data_fase3.json          # (Generated) Data kalibrasi / mask Fase 3
 ├── final_mapping.json       # (Generated) File state/pemetaan skenario
-├── template_config.json     # (Generated) File koordinat kalibrasi
 └── .gitignore
 ```
 
@@ -57,6 +64,8 @@ Buat virtual environment lalu instal library yang dibutuhkan:
 
 ```bash
 pip install ollama rapidfuzzy diffusers transformers accelerate torch torchvision opencv-python scipy pillow numpy
+```
+
 ## 🚀 Alur Kerja (How to Run)
 
 Buka file Fake_KTP_Generator.ipynb di Jupyter Notebook atau VS Code, lalu jalankan cell secara berurutan:
@@ -67,7 +76,7 @@ Sistem akan meminta LLM membuat 100 data identitas KTP lengkap. Sistem menjamin 
 Note: Fase 2 (Pembangkitan Wajah via AI) secara default dilewati/di-skip pada pipeline ini untuk efisiensi komputasi, digantikan dengan injeksi Placeholder Kotak Berwarna.
 
 2. Fase 3: Kalibrasi Geometri (Manual)
-Tahap krusial. Jendela GUI OpenCV akan terbuka. Lakukan klik kiri tepat pada 8 titik untuk setiap template KTP di folder Template/:
+Tahap krusial. Jendela GUI OpenCV akan terbuka. Lakukan klik kiri tepat pada 8 titik untuk setiap template KTP di folder KTP/:
 
 Titik 1-4: Sudut luar KTP (Kiri-Atas -> Kanan-Atas -> Kanan-Bawah -> Kiri-Bawah)
 
@@ -91,11 +100,11 @@ Khusus Skenario B, sistem akan memotong bentuk KTP, menempelkannya ke background
 Menerapkan keburaman lensa (Gaussian Blur), Noise Sensor (ISO), dan kompresi JPEG agar menyatu organik.
 
 📊 Output
-Setelah seluruh cell dieksekusi, periksa folder Output/dataset_siap_pakai/. Anda akan mendapatkan:
+Setelah seluruh cell dieksekusi, periksa folder Fase7-Output/. Anda akan mendapatkan:
 
-100 Gambar KTP Sintetik (.jpg) yang siap digunakan untuk training model ML.
+100 Gambar KTP Sintetik (.jpg) dengan nama seperti `ktp_synthetic_*.jpg` yang siap digunakan untuk training model ML.
 
-ground_truth_labels.json, file yang berisi daftar lengkap Kunci Jawaban / Label (NIK, Nama, koordinat, dll) yang memetakan identitas teks ke nama file gambar yang bersangkutan.
+ground_truth_ml.json, file yang berisi daftar lengkap Kunci Jawaban / Label (NIK, Nama, koordinat, dll) yang memetakan identitas teks ke nama file gambar yang bersangkutan.
 
 ---
 
@@ -104,7 +113,8 @@ ground_truth_labels.json, file yang berisi daftar lengkap Kunci Jawaban / Label 
 - Pastikan semua font tersedia di folder `font/` sebelum menjalankan notebook
 - GPU NVIDIA dengan CUDA support sangat disarankan untuk performa optimal
 - Proses generasi dapat memakan waktu beberapa jam tergantung jumlah dataset
-- Output tersimpan di folder `Output/dataset_siap_pakai/`
+- Output akhir tersimpan di folder `Fase7-Output/`
+- Folder `Fase1-Output/` sampai `Fase7-Output/` serta JSON generatif utama di root sudah diabaikan lewat `.gitignore`
 
 ## 📄 Lisensi
 

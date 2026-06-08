@@ -1,9 +1,12 @@
 Output/
+Fase*-Output/
 dataset_mask/
 dataset_background/
 dataset_warped_layers/
 dataset_composited/
 dataset_siap_pakai/
+config_fase3.json
+data_fase3.json
 final_mapping.json
 ground_truth_labels.json
 .ipynb_checkpoints/
